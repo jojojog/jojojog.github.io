@@ -58,6 +58,7 @@ addTodoBtn.addEventListener('click', () => {
   const newTodoValue = newTodoInput.value.trim();
   if (newTodoValue) {
     addTodo(newTodoValue);
+    newTodoInput.value = "";
   }
 });
 
