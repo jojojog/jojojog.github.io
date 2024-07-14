@@ -31,6 +31,7 @@ const removeTodo = (todoIndex) => {
 
 function updateTodoListInLocalStorage() {
   localStorage.setItem("todoList", JSON.stringify(todoList));
+  populateTodoList(todoList);
 }
 
 function populateTodoList(todoList) {
@@ -50,7 +51,6 @@ function populateTodoList(todoList) {
     completeCheckbox.addEventListener("change", () => {
       todoItem.completed = completeCheckbox.checked;
       updateTodoListInLocalStorage(); // Update data in local storage
-      populateTodoList(todoList);
     });
     
     actionDiv.appendChild(completeCheckbox);
