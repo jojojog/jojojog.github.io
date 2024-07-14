@@ -39,6 +39,8 @@ function populateTodoList(todoList) {
     const newListItem = document.createElement("li");
     newListItem.innerText = todoItem.text;
 
+    const actionDiv = document.createElement("div");
+
     // Add a checkbox to mark the item as complete (optional)
     const completeCheckbox = document.createElement("input");
     completeCheckbox.type = "checkbox";
@@ -49,7 +51,7 @@ function populateTodoList(todoList) {
       updateTodoListInLocalStorage(); // Update data in local storage
     });
     
-    newListItem.appendChild(completeCheckbox);
+    actionDiv.appendChild(completeCheckbox);
 
     // Add a button to remove the item (optional)
     const removeBtn = document.createElement("button");
@@ -57,8 +59,9 @@ function populateTodoList(todoList) {
     removeBtn.addEventListener("click", () => {
       removeTodo(todoList.indexOf(todoItem));
     });
-    newListItem.appendChild(removeBtn);
+    actionDiv.appendChild(removeBtn);
 
+    newListItem.appendChild(actionDiv);
     todoListEl.appendChild(newListItem);
   });
 }
