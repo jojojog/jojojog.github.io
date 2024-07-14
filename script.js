@@ -50,6 +50,7 @@ function populateTodoList(todoList) {
     completeCheckbox.addEventListener("change", () => {
       todoItem.completed = completeCheckbox.checked;
       updateTodoListInLocalStorage(); // Update data in local storage
+      populateTodoList(todoList);
     });
     
     actionDiv.appendChild(completeCheckbox);
