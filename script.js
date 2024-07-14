@@ -29,6 +29,10 @@ const removeTodo = (todoIndex) => {
   populateTodoList(todoList);
 };
 
+function updateTodoListInLocalStorage() {
+  localStorage.setItem("todoList", JSON.stringify(todoList));
+}
+
 function populateTodoList(todoList) {
   todoListEl.innerHTML = ""; // Clear existing list items
   todoList.forEach((todoItem) => {
@@ -39,11 +43,17 @@ function populateTodoList(todoList) {
     const completeCheckbox = document.createElement("input");
     completeCheckbox.type = "checkbox";
     completeCheckbox.checked = todoItem.completed;
+    // Event listener for checkbox click to update status
+    completeCheckbox.addEventListener("change", () => {
+      todoItem.completed = completeCheckbox.checked;
+      updateTodoListInLocalStorage(); // Update data in local storage
+    });
+    
     newListItem.appendChild(completeCheckbox);
 
     // Add a button to remove the item (optional)
     const removeBtn = document.createElement("button");
-    removeBtn.innerText = "Remove";
+    removeBtn.innerText = "X";
     removeBtn.addEventListener("click", () => {
       removeTodo(todoList.indexOf(todoItem));
     });
