@@ -1,28 +1,55 @@
-const todoList = document.getElementById('todo-list');
-const newTodoInput = document.getElementById('new-todo');
-const addTodoBtn = document.getElementById('add-todo-btn');
+const todoListEl = document.getElementById("todo-list");
 
-// Function to add a new todo item
+// Function to load TODO list from local storage (on page load or refresh)
+function loadTodoList() {
+  const storedTodoListJson = localStorage.getItem("todoList");
+  let todoList;
+  if (storedTodoListJson) {
+    todoList = JSON.parse(storedTodoListJson);
+  } else {
+    todoList = [];
+  }
+  populateTodoList(todoList);
+}
+
+// Function to add a new TODO item
 const addTodo = (todoText) => {
-  const newTodoItem = document.createElement('li');
-  newTodoItem.innerText = todoText;
-
-  // Add a button to remove the todo item (optional)
-  const removeBtn = document.createElement('button');
-  removeBtn.innerText = 'Remove';
-  removeBtn.addEventListener('click', () => {
-    todoList.removeChild(newTodoItem);
-  });
-
-  newTodoItem.appendChild(removeBtn);
-  todoList.appendChild(newTodoItem);
-  newTodoInput.value = ''; // Clear input field after adding
+  const newTodo = { text: todoText, completed: false };
+  todoList.push(newTodo);
+  localStorage.setItem("todoList", JSON.stringify(todoList));
+  populateTodoList(todoList);
 };
 
-// Event listener for adding a todo on button click
-addTodoBtn.addEventListener('click', () => {
-  const newTodoValue = newTodoInput.value.trim();
-  if (newTodoValue) {
-    addTodo(newTodoValue);
-  }
-});
+// Function to remove a TODO item
+const removeTodo = (todoIndex) => {
+  todoList.splice(todoIndex, 1);
+  localStorage.setItem("todoList", JSON.stringify(todoList));
+  populateTodoList(todoList);
+};
+
+function populateTodoList(todoList) {
+  todoListEl.innerHTML = ""; // Clear existing list items
+  todoList.forEach((todoItem) => {
+    const newListItem = document.createElement("li");
+    newListItem.innerText = todoItem.text;
+
+    // Add a checkbox to mark the item as complete (optional)
+    const completeCheckbox = document.createElement("input");
+    completeCheckbox.type = "checkbox";
+    completeCheckbox.checked = todoItem.completed;
+    newListItem.appendChild(completeCheckbox);
+
+    // Add a button to remove the item (optional)
+    const removeBtn = document.createElement("button");
+    removeBtn.innerText = "Remove";
+    removeBtn.addEventListener("click", () => {
+      removeTodo(todoList.indexOf(todoItem));
+    });
+    newListItem.appendChild(removeBtn);
+
+    todoListEl.appendChild(newListItem);
+  });
+}
+
+// Load TODO list on page load
+loadTodoList();
