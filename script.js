@@ -1,4 +1,6 @@
 const todoListEl = document.getElementById("todo-list");
+const newTodoInput = document.getElementById('new-todo');
+const addTodoBtn = document.getElementById('add-todo-btn');
 let todoList;
 
 // Function to load TODO list from local storage (on page load or refresh)
@@ -50,6 +52,15 @@ function populateTodoList(todoList) {
     todoListEl.appendChild(newListItem);
   });
 }
+
+// Event listener for adding a todo on button click
+addTodoBtn.addEventListener('click', () => {
+  const newTodoValue = newTodoInput.value.trim();
+  if (newTodoValue) {
+    addTodo(newTodoValue);
+  }
+});
+
 
 // Load TODO list on page load
 loadTodoList();
