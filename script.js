@@ -1,9 +1,9 @@
 const todoListEl = document.getElementById("todo-list");
+let todoList;
 
 // Function to load TODO list from local storage (on page load or refresh)
 function loadTodoList() {
   const storedTodoListJson = localStorage.getItem("todoList");
-  let todoList;
   if (storedTodoListJson) {
     todoList = JSON.parse(storedTodoListJson);
   } else {
