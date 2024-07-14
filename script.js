@@ -38,6 +38,7 @@ function populateTodoList(todoList) {
   todoList.forEach((todoItem) => {
     const newListItem = document.createElement("li");
     newListItem.innerText = todoItem.text;
+    newListItem.style.backgroundColor = todoItem.completed ? "green" : "white"; // Set background color
 
     const actionDiv = document.createElement("div");
 
